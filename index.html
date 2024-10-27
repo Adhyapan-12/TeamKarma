@@ -1,0 +1,732 @@
+
+
+<title>Adhyapan - Learning Path Dashboard</title>
+<style>
+/* Advanced rainbow animation */
+@keyframes rainbow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96e6a1, #d4fc79, #ff9a9e, #a8edea);
+    background-size: 400% 400%;
+    animation: rainbow 15s ease infinite;
+}
+
+.welcome-sheet {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    max-width: 800px;
+    margin: 50px auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+.title {
+    font-size: 3.5em;
+    color: #333;
+    margin-bottom: 20px;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: titleGlow 2s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+    0%, 100% { text-shadow: 0 0 10px rgba(255,255,255,0.8); }
+    50% { text-shadow: 0 0 20px rgba(255,255,255,0.8); }
+}
+
+.path-button, .course-button {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 10px;
+    width: 280px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.path-button:hover, .course-button:hover {
+    transform: scale(1.05) translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+.navigation {
+    display: none;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px 0;
+    padding: 20px;
+}
+
+.nav-button {
+    padding: 15px 40px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.2em;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.nav-button:hover {
+    background: #4ecdc4;
+    color: white;
+    transform: translateY(-3px);
+}
+
+.courses-section {
+    display: none;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.course-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.course-item {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 30px;
+    display: none;
+    animation: slideIn 0.5s ease-out;
+    width: 90%;
+    max-width: 1000px;
+    margin: 20px auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+@keyframes slideIn {
+    from { transform: translateX(-100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+.course-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+}
+
+.course-info {
+    flex: 1;
+}
+
+.course-info h2 {
+    color: #333;
+    font-size: 2em;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #4ecdc4;
+    padding-bottom: 10px;
+}
+
+.course-image {
+    width: 400px;
+    height: 300px;
+    border-radius: 15px;
+    object-fit: cover;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
+}
+
+.course-image:hover {
+    transform: scale(1.05);
+}
+
+.skill-list, .job-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.skill-list li, .job-list li {
+    margin: 10px 0;
+    padding: 10px 15px;
+    background: rgba(78, 205, 196, 0.1);
+    border-radius: 8px;
+    transition: transform 0.2s ease;
+}
+
+.skill-list li:hover, .job-list li:hover {
+    transform: translateX(10px);
+    background: rgba(78, 205, 196, 0.2);
+}
+
+.modules-section {
+    display: none;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.module-group {
+    margin: 20px 0;
+}
+
+.module-button {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2em;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+}
+
+.module-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.module-details {
+    display: none;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.sub-module-button {
+    padding: 10px 20px;
+    margin: 5px;
+    background: rgba(78, 205, 196, 0.2);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.sub-module-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.contact-section {
+    display: none;
+    max-width: 800px;
+    margin: 50px auto;
+}
+
+.contact-card {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.course-item {
+    animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="welcome-sheet">
+    <h1 class="title">Welcome to Adhyapan</h1>
+    <p>Your Gateway to Professional Excellence</p>
+    <p>Explore our comprehensive learning paths designed to enhance your skills and accelerate your career growth</p>
+    <button class="path-button" onclick="showNavigation()">Let's Find Your Path</button>
+</div>
+
+<div class="navigation" id="navigation">
+    <button class="nav-button" onclick="showHome()">Home</button>
+    <button class="nav-button" onclick="showCourses()">Courses</button>
+    <button class="nav-button" onclick="showModules()">Modules</button>
+    <button class="nav-button" onclick="showContact()">Contact</button>
+</div>
+
+<div class="courses-section" id="coursesSection">
+    <div class="course-container" id="courseButtons">
+        <button class="course-button" onclick="showCourseDetails('communication')">Communication Skills</button>
+        <button class="course-button" onclick="showCourseDetails('datascience')">Data Science</button>
+        <button class="course-button" onclick="showCourseDetails('cybersecurity')">Cyber Security</button>
+        <button class="course-button" onclick="showCourseDetails('aiml')">AI/ML</button>
+        <button class="course-button" onclick="showCourseDetails('business')">Business Management</button>
+        <button class="course-button" onclick="showCourseDetails('fashion')">Fashion Designing</button>
+        <button class="course-button" onclick="showCourseDetails('graphics')">Graphics and VFX</button>
+    </div>
+
+    <!-- Course Detail Sections -->
+    <div id="communication" class="course-item">
+        <div class="course-content">
+            <div class="course-info">
+                <h2>Communication Skills</h2>
+                <h3>Required Skills:</h3>
+                <ul class="skill-list">
+                    <li> WRITTEN COMMUNICATION</li>
+                    <li> ORAL COMMUNICATION</li>
+                    <li> NON-VERBAL AND VISUAL COMMUNICATION</li>
+                    <li> ACTIVE LISTENING</li>
+                    <li> CONTEXTUAL COMMUNICATION</li>
+                </ul>
+            </div>
+            <img src="https://cms.boardmix.com/images/examples/team-communication-mind-map.png?ivm-quality=OD" alt="Communication Skills dashboard " clss="course-image" width="400" heigh"300">
+        </div>
+    </div>
+
+    <div id="datascience" class="course-item">
+        <div class="course-content">
+            <div class="course-info">
+                <h2>Data Science</h2>
+                <h3>Required Skills:</h3>
+                <ul class="skill-list">
+                    <li>Statistical Analysis</li>
+                    <li>Python for Data Science</li>
+                    <li>Machine Learning</li>
+                    <li>Data Visualization</li>
+                    <li> Big Data Technologies</li>
+                </ul>
+                <h3>Job Opportunities:</h3>
+                <ul class="job-list">
+                    <li>Data Scientist ($90,000 - $180,000)</li>
+                    <li>Data Analyst ($60,000 - $120,000)</li>
+                    <li>Business Intelligence Analyst ($70,000 - $140,000)</li>
+                    <li>Data Engineer ($85,000 - $160,000)</li>
+                </ul>
+            </div>
+            <img src="https://graduate.northeastern.edu/resources/wp-content/uploads/sites/4/2020/06/iStock-1221293664-1-1-1.jpg" alt="Data visualization dashboard with analytics" class="course-image" width="400" height="300">
+        </div>
+    </div>
+
+    <div id="cybersecurity" class="course-item">
+        <div class="course-content">
+            <div class="course-info">
+                <h2>Cyber Security</h2>
+                <h3>Required Skills:</h3>
+                <ul class="skill-list">
+                    <li> Network Security</li>
+                    <li>Cryptography</li>
+                    <li> Ethical Hacking</li>
+                    <li>Security Policies</li>
+                    <li>Forensics</li>
+                </ul>
+                <h3>Job Opportunities:</h3>
+                <ul class="job-list">
+                    <li>Security Analyst ($80,000 - $160,000)</li>
+                    <li>Penetration Tester ($90,000 - $150,000)</li>
+                    <li>Security Engineer ($100,000 - $180,000)</li>
+                    <li>Security Consultant ($85,000 - $170,000)</li>
+                </ul>
+            </div>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzgLSbmgYxJMTJcUwssl1hmgjJjLsURQsWjg&s" alt="Cybersecurity monitoring system interface" class="course-image" width="400" height="300">
+        </div>
+    </div>
+
+    <div id="aiml" class="course-item">
+        <div class="course-content">
+            <div class="course-info">
+                <h2>AI/ML</h2>
+                <h3>Required Skills:</h3>
+                <ul class="skill-list">
+                    <li>Machine Learning Algorithms</li>
+                    <li>Deep Learning</li>
+                    <li>Neural Networks</li>
+                    <li>Natural Language Processing</li>
+                    <li> Computer Vision</li>
+                </ul>
+                <h3>Job Opportunities:</h3>
+                <ul class="job-list">
+                    <li>AI Engineer ($100,000 - $200,000)</li>
+                    <li>ML Engineer ($95,000 - $180,000)</li>
+                    <li>Research Scientist ($120,000 - $250,000)</li>
+                    <li>AI Product Manager ($110,000 - $190,000)</li>
+                </ul>
+            </div>
+            <img src="https://media.licdn.com/dms/image/D5612AQHjDGhc8cNfJA/article-cover_image-shrink_720_1280/0/1704439037481?e=2147483647&v=beta&t=wSs9ZAGGWfx_9TAfotJLRY87JtMQPhKo7wNAh1-inU0" alt="AI neural network visualization" class="course-image" width="400" height="300">
+        </div>
+    </div>
+
+    <div id="business" class="course-item">
+        <div class="course-content">
+            <div class="course-info">
+                <h2>Business Management</h2>
+                <h3>Required Skills:</h3>
+                <ul class="skill-list">
+                    <li>Project Management with Agile and Scrum</li>
+                    <li> Digital Marketing and E-commerce</li>
+                    <li>Financial Analysis and Planning</li>
+                    <li>Human Resource Management</li>
+                    <li> Leadership and Communication</li>
+                    <li> Entrepreneurship and Startup Development</li>
+                </ul>
+                <h3>Job Opportunities:</h3>
+                <ul class="job-list">
+                    <li>Human Resources Manager</li>
+                    <li>Business Manager</li>
+                    <li>Marketing Manager</li>
+                    <li>Supply Chain Manager</li>
+                    <li>Product and Project Manager</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="fashion" class="course-item">
+        <div class="course-content">
+            <div class="course-info">
+                <h2>Fashion Designing</h2>
+                <h3>Required Skills:</h3>
+                <ul class="skill-list">
+                    <li>✏Sketching & Illustration</li>
+                    <li> Pattern Making</li>
+                    <li> Garment Construction</li>
+                    <li> Color Theory</li>
+                    <li>CAD Software</li>
+                </ul>
+                <h3>Job Opportunities:</h3>
+                <ul class="job-list">
+                    <li>Fashion Designer ($45,000 - $125,000)</li>
+                    <li>Pattern Maker ($40,000 - $85,000)</li>
+                    <li>Fashion Merchandiser ($50,000 - $100,000)</li>
+                    <li>Costume Designer ($45,000 - $95,000)</li>
+                </ul>
+            </div>
+            <img src="https://cdn.tophatch.com/media/filer_public_thumbnails/filer_public/9c/25/9c25bddc-005e-4c11-8926-9f28b1d10337/emilykeller_concepts1-colorsketches.jpg__2400.0x1760.0_q85_subsampling-2.jpg" alt="Fashion design sketches and fabric swatches" class="course-image" width="400" height="300">
+        </div>
+    </div>
+
+    <div id="graphics" class="course-item">
+        <div class="course-content">
+            <div class="course-info">
+                <h2>Graphics and VFX</h2>
+                <h3>Required Skills:</h3>
+                <ul class="skill-list">
+                    <li>3D Modeling</li>
+                    <li>Animation</li>
+                    <li>Compositing</li>
+                    <li> Digital Art</li>
+                    <li>Real-time Graphics</li>
+                </ul>
+                <h3>Job Opportunities:</h3>
+                <ul class="job-list">
+                    <li>VFX Artist ($60,000 - $140,000)</li>
+                    <li>3D Animator ($55,000 - $120,000)</li>
+                    <li>Motion Graphics Designer ($50,000 - $110,000)</li>
+                    <li>Technical Director ($80,000 - $160,000)</li>
+                </ul>
+            </div>
+            <img src="https://certifieddigitalartist.com/content/images/2022/02/beginners-guide-vfx-1.jpg" alt="3D animation and visual effects workspace" class="course-image" width="400" height="300">
+        </div>
+    </div>
+
+</div>
+
+<div class="modules-section" id="modulesSection">
+  <div class="module-container">
+    <!-- 10th Class Module -->
+    <div class="module-group">
+      <button class="module-button" onclick="showModuleDetails('tenth')">10th Class Module</button>
+      <div id="tenth" class="module-details">
+        <button class="sub-module-button" onclick="showSubModuleContent('intermediate')">Intermediate</button>
+        <button class="sub-module-button" onclick="showSubModuleContent('iti')">ITI</button>
+        <button class="sub-module-button" onclick="showSubModuleContent('diploma')">Diploma</button>
+        <button class="sub-module-button" onclick="showSubModuleContent('hotelManagement')">Diploma in Hotel Management</button>
+        <button class="sub-module-button" onclick="showSubModuleContent('culinaryArts')">Culinary Arts</button>
+      </div>
+    </div>
+
+    <!-- 12th Class Module -->
+    <div class="module-group">
+      <button class="module-button" onclick="showModuleDetails('twelfth')">12th Class Module</button>
+      <div id="twelfth" class="module-details">
+        <button class="sub-module-button" onclick="showSubModuleContent('engineering')">Engineering</button>
+        <button class="sub-module-button" onclick="showSubModuleContent('medical')">Medical</button>
+        <button class="sub-module-button" onclick="showSubModuleContent('commerce')">Commerce</button>
+        <button class="sub-module-button" onclick="showSubModuleContent('arts')">Arts</button>
+        <button class="sub-module-button" onclick="showSubModuleContent('design')">Design</button>
+        <button class="sub-module-button" onclick="showSubModuleContent('law')">Law</button>
+      </div>
+    </div>
+
+    <!-- Graduation Module -->
+    <div class="module-group">
+      <button class="module-button" onclick="showModuleDetails('graduation')">Graduation Module</button>
+      <div id="graduation" class="module-details">
+        <button class="sub-module-button" onclick="showSubModuleContent('mba')">MBA</button>
+        <button class="sub-module-button" onclick="showSubModuleContent('mtech')">M.Tech</button>
+        <button class="sub-module-button" onclick="showSubModuleContent('msc')">M.Sc</button>
+        <button class="sub-module-button" onclick="showSubModuleContent('ma')">M.A</button>
+        <button class="sub-module-button" onclick="showSubModuleContent('lawPG')">Law (P.G)</button>
+        <button class="sub-module-button" onclick="showSubModuleContent('mfa')">M.F.A</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Contact Section -->
+<div class="contact-section" id="contactSection">
+  <div class="contact-card">
+    <h2>Contact Us</h2>
+    <p>Email: adhyapan111@gmail.com</p>
+    <p>Instagram: adhyapan111</p>
+    <p>Linkedin: adhyapan111</p>
+  </div>
+</div>
+
+<script>
+function showNavigation() {
+    document.getElementById('navigation').style.display = 'flex';
+    document.querySelector('.welcome-sheet').style.display = 'none';
+    showHome();
+}
+
+function showHome() {
+    const coursesSection = document.getElementById('coursesSection');
+    coursesSection.style.display = 'none';
+    
+    // Create and show home content
+    const homeContent = document.createElement('div');
+    homeContent.className = 'welcome-sheet';
+    homeContent.innerHTML = `
+        <h2>Learning Path Dashboard</h2>
+        <p>Discover your perfect career path through our specialized courses</p>
+        <p>Each path is carefully crafted to provide:</p>
+        <ul style="text-align: left;">
+            <li>Industry-relevant skills</li>
+            <li>Hands-on projects</li>
+            <li>Expert mentorship</li>
+            <li>Career guidance</li>
+            <li>Job placement assistance</li>
+        </ul>
+    `;
+    
+    // Replace existing content
+    const existingHome = document.querySelector('#homeContent');
+    if (existingHome) existingHome.remove();
+    homeContent.id = 'homeContent';
+    document.body.appendChild(homeContent);
+}
+
+function showCourses() {
+    const homeContent = document.querySelector('#homeContent');
+    if (homeContent) homeContent.style.display = 'none';
+    
+    document.getElementById('coursesSection').style.display = 'block';
+    document.querySelectorAll('.course-item').forEach(item => {
+        item.style.display = 'none';
+    });
+    document.getElementById('courseButtons').style.display = 'flex';
+}
+
+function showModules() {
+    hideAllSections();
+    document.getElementById('modulesSection').style.display = 'block';
+}
+
+function showContact() {
+    hideAllSections();
+    document.getElementById('contactSection').style.display = 'block';
+}
+
+function hideAllSections() {
+    document.getElementById('coursesSection').style.display = 'none';
+    document.getElementById('modulesSection').style.display = 'none';
+    document.getElementById('contactSection').style.display = 'none';
+    const homeContent = document.querySelector('#homeContent');
+    if (homeContent) homeContent.style.display = 'none';
+}
+
+function showModuleDetails(moduleId) {
+    document.querySelectorAll('.module-details').forEach(detail => {
+        detail.style.display = 'none';
+    });
+    document.getElementById(moduleId).style.display = 'block';
+}
+
+function showSubModuleContent(subModuleId) {
+    document.querySelectorAll('.course-item').forEach(item => {
+        item.style.display = 'none';
+    });
+    
+    let contentContainer = document.getElementById(`${subModuleId}Content`);
+    if (!contentContainer) {
+        contentContainer = document.createElement('div');
+        contentContainer.id = `${subModuleId}Content`;
+        contentContainer.className = 'course-item';
+        document.getElementById('modulesSection').appendChild(contentContainer);
+    }
+    
+    const contentMap = {
+        'intermediate': {
+            title: 'Intermediate',
+            skills: ['Mathematics', 'Physics', 'Chemistry', 'Biology'],
+            jobs: ['Medical Field', 'Engineering', 'Research'],
+            image: 'intermediate.jpg'
+        },
+        'iti': {
+            title: 'ITI',
+            skills: ['Technical Skills', 'Practical Training', 'Workshop Practice'],
+            jobs: ['Technician', 'Machinist', 'Electrician'],
+            image: 'iti.jpg'
+        },
+        'diploma': {
+            title: 'Diploma',
+            skills: ['Technical Knowledge', 'Engineering Basics', 'Practical Skills'],
+            jobs: ['Junior Engineer', 'Technical Supervisor', 'Project Assistant'],
+            image: 'diploma.jpg'
+        },
+        'hotelManagement': {
+            title: 'Diploma in Hotel Management',
+            skills: ['Hospitality Management', 'Food Service', 'Customer Relations'],
+            jobs: ['Hotel Manager', 'Chef', 'Event Planner'],
+            image: 'hotelManagement.jpg'
+        },
+        'culinaryArts': {
+            title: 'Culinary Arts',
+            skills: ['Cooking Techniques', 'Menu Planning', 'Food Safety'],
+            jobs: ['Chef', 'Pastry Chef', 'Caterer'],
+            image: 'culinaryArts.jpg'
+        },
+        'engineering': {
+            title: 'Engineering',
+            skills: ['Mathematics', 'Physics', 'Engineering Principles'],
+            jobs: ['Engineer', 'Technician', 'Project Manager'],
+            image: 'engineering.jpg'
+        },
+        'medical': {
+            title: 'Medical',
+            skills: ['Biology', 'Chemistry', 'Patient Care'],
+            jobs: ['Doctor', 'Nurse', 'Medical Technician'],
+            image: 'medical.jpg'
+        },
+        'commerce': {
+            title: 'Commerce',
+            skills: ['Accounting', 'Business Knowledge', 'Economics'],
+            jobs: ['Accountant', 'Business Analyst', 'Marketing Executive'],
+            image: 'commerce.jpg'
+        },
+        'arts': {
+            title: 'Arts',
+            skills: ['Creativity', 'Critical Thinking', 'Art Techniques'],
+            jobs: ['Artist', 'Designer', 'Art Teacher'],
+            image: 'arts.jpg'
+        },
+        'design': {
+            title: 'Design',
+            skills: ['Graphic Design', 'User Experience', 'Creative Software'],
+            jobs: ['Graphic Designer', 'UI/UX Designer', 'Art Director'],
+            image: 'design.jpg'
+        },
+        'law': {
+            title: 'Law',
+            skills: ['Legal Knowledge', 'Analytical Skills', 'Research Skills'],
+            jobs: ['Lawyer', 'Paralegal', 'Judge'],
+            image: 'law.jpg'
+        },
+        'mba': {
+            title: 'MBA',
+            skills: ['Business Management', 'Leadership', 'Strategic Thinking'],
+            jobs: ['Business Manager', 'Consultant', 'Entrepreneur'],
+            image: 'mba.jpg'
+        },
+        'mtech': {
+            title: 'M.Tech',
+            skills: ['Advanced Engineering', 'Research Skills', 'Project Management'],
+            jobs: ['Researcher', 'Senior Engineer', 'Technical Lead'],
+            image: 'mtech.jpg'
+        },
+        'msc': {
+            title: 'M.Sc',
+            skills: ['Scientific Research', 'Analytical Methods', 'Technical Knowledge'],
+            jobs: ['Research Scientist', 'Lab Manager', 'Data Analyst'],
+            image: 'msc.jpg'
+        },
+        'ma': {
+            title: 'M.A',
+            skills: ['Critical Analysis', 'Research Skills', 'Creative Writing'],
+            jobs: ['Writer', 'Editor', 'Academician'],
+            image: 'ma.jpg'
+        },
+        'lawPG': {
+            title: 'Law (P.G)',
+            skills: ['Advanced Legal Knowledge', 'Critical Thinking', 'Research'],
+            jobs: ['Barrister', 'Legal Consultant', 'Law Academic'],
+            image: 'lawPG.jpg'
+        },
+        'mfa': {
+            title: 'M.F.A',
+            skills: ['Artistic Skills', 'Creative Writing', 'Theoretical Knowledge'],
+            jobs: ['Artist', 'Creative Director', 'Art Educator'],
+            image: 'mfa.jpg'
+        }
+    };
+    
+    const content = contentMap[subModuleId];
+    if (!content) return;
+    
+    contentContainer.innerHTML = `
+        <div class="course-content">
+            <div class="course-info">
+                <h2>${content.title}</h2>
+                <h3>Required Skills:</h3>
+                <ul class="skill-list">
+                    ${content.skills.map(skill => `<li>${skill}</li>`).join('')}
+                </ul>
+                <h3>Job Opportunities:</h3>
+                <ul class="job-list">
+                    ${content.jobs.map(job => `<li>${job}</li>`).join('')}
+                </ul>
+            </div>
+        </div>
+    `;
+    
+    contentContainer.style.display = 'block';
+    contentContainer.scrollIntoView({ behavior: 'smooth' });
+}
+
+function showCourseDetails(courseId) {
+    document.querySelectorAll('.course-item').forEach(item => {
+        item.style.display = 'none';
+    });
+    document.getElementById(courseId).style.display = 'block';
+    document.getElementById(courseId).scrollIntoView({ behavior: 'smooth' });
+}
+
+// Initialize the page
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('coursesSection').style.display = 'none';
+    document.getElementById('modulesSection').style.display = 'none';
+    document.getElementById('contactSection').style.display = 'none';
+});
+</script>
+
+</body>
+</html>
